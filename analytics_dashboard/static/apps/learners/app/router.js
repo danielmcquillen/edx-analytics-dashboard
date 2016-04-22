@@ -11,6 +11,12 @@ define(function (require) {
             '(/)(?*queryString)': 'showLearnerRosterPage',
             ':username(/)(?*queryString)': 'showLearnerDetailPage',
             '*notFound': 'showNotFoundPage'
+        },
+
+        onRoute: function (name) {
+            if (name.startsWith('show')) {
+                this.options.controller.triggerMethod('showPage');
+            }
         }
     });
 
