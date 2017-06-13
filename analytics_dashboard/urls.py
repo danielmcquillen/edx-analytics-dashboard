@@ -10,9 +10,6 @@ from django.views.generic import RedirectView
 from django.views.i18n import javascript_catalog
 from django.contrib.staticfiles import views as static_views
 
-# iBio: Adding local login mechanism
-from django.contrib.auth import views as auth_views
-
 # pylint suggests importing analytics_dashboard.core, which causes errors in our AMI
 # pylint: disable=relative-import
 from core import views
@@ -38,10 +35,8 @@ urlpatterns = [
     url(r'^accounts/login/$',
         RedirectView.as_view(url=reverse_lazy('social:begin', args=['edx-oidc']), permanent=False, query_string=True),
         name='login'),
-    url(r'^login/$', auth_views.login, name='login'),
-    url(r'^logout/$', auth_views.logout, name='logout'),
-    # url(r'^accounts/logout/$', views.logout, name='logout'),
-    # url(r'^accounts/logout_then_login/$', views.logout_then_login, name='logout_then_login'),
+    url(r'^accounts/logout/$', views.logout, name='logout'),
+    url(r'^accounts/logout_then_login/$', views.logout_then_login, name='logout_then_login'),
     url(r'^test/auto_auth/$', views.AutoAuth.as_view(), name='auto_auth'),
     url(r'^announcements/', include('pinax.announcements.urls', namespace='pinax_announcements')),
 ]
